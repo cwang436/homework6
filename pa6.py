@@ -10,6 +10,7 @@ this is the code for pa6
 
 
 def make_change(total):
+    '''makes all possible change combos'''
     coins = [1, 5, 10, 25, 100]
     result = []
     helperchange(total, coins, [], result)
@@ -17,6 +18,7 @@ def make_change(total):
 
 
 def helperchange(remaining, coins, current_combo, result):
+    '''helper for make_change'''
     if remaining == 0:
         result.append(list(current_combo))
         return
@@ -30,6 +32,7 @@ def helperchange(remaining, coins, current_combo, result):
 
 
 def dict_filter(func, dictionary):
+    '''filters a dictionary through a given function'''
     ret = {}
     for key, val in dictionary.items():
         if func(key, val) is True:
@@ -38,13 +41,17 @@ def dict_filter(func, dictionary):
 
 
 def treemap(function, tree):
+    '''puts all keys and values of a tree through a given function'''
     tree.key, tree.value = function(tree.key, tree.value)
     for i in tree.children:
         treemap(function, i)
 
 
 class DTree:
+    '''decision tree class'''
+
     def __init__(self, variable, threshold, lessequal, greater, outcome):
+        '''constructor'''
         if (variable is None or threshold is None or lessequal is None or greater is None) == (outcome is None):
             raise ValueError()
         self.variable = variable
@@ -54,6 +61,7 @@ class DTree:
         self.outcome = outcome
 
     def tuple_atleast(self):
+        '''at least how many values required in the tuple'''
         if self.variable is None:
             return 0
         maxnum = self.variable + 1
@@ -64,6 +72,7 @@ class DTree:
         return maxnum
 
     def find_outcome(self, tple):
+        '''finds decision given tuple with data'''
         if self.variable is None:
             return self.outcome
         if tple[self.variable] > self.threshold:
@@ -72,6 +81,7 @@ class DTree:
             return self.lessequal.find_outcome(tple)
 
     def no_repeats(self):
+        '''determines if there repeated tests in decision tree'''
         def helper(node, lst):
             if node.variable is None:
                 return True
