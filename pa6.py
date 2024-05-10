@@ -8,7 +8,7 @@ Created on Thu May  9 17:25:30 2024
 this is the code for pa6
 """
 
-         
+
 def make_change(total):
     coins = [1, 5, 10, 25, 100]
     result = []
@@ -25,7 +25,7 @@ def helperchange(remaining, coins, current_combo, result):
     coin = coins[0]
     max_coins = remaining // coin
     for i in range(max_coins + 1):
-        helperchange(remaining - i * coin, coins[1:], 
+        helperchange(remaining - i * coin, coins[1:],
                      current_combo + [coin] * i, result)
 
 
@@ -37,32 +37,10 @@ def dict_filter(func, dictionary):
     return ret
 
 
-class KVTree:
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-        self.children = []
-    def add_child(self, child):
-        self.children.append(child)
-
-
-samplekv = KVTree("us", 4.6)
-pa = KVTree("pa", 1.9)
-samplekv.add_child(pa)
-pa.add_child(KVTree("Pittsburgh", 0.3))
-pa.add_child(KVTree("Philadelphia", 1.6))
-il = KVTree("il", 2.7)
-samplekv.add_child(il)
-il.add_child(KVTree("Chicago", 2.7))
-
-
 def treemap(function, tree):
     tree.key, tree.value = function(tree.key, tree.value)
     for i in tree.children:
         treemap(function, i)
-
-
-treemap(lambda x, y: (x.upper(), y * 1000000), samplekv)
 
 
 class DTree:
@@ -74,9 +52,9 @@ class DTree:
         self.lessequal = lessequal
         self.greater = greater
         self.outcome = outcome
-    
+
     def tuple_atleast(self):
-        if self.variable == None:
+        if self.variable is None:
             return 0
         maxnum = self.variable + 1
         if self.lessequal.tuple_atleast() > maxnum:
@@ -92,7 +70,7 @@ class DTree:
             return self.greater.find_outcome(tple)
         if tple[self.variable] <= self.threshold:
             return self.lessequal.find_outcome(tple)
-        
+
     def no_repeats(self):
         def helper(node, lst):
             if node.variable is None:
