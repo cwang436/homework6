@@ -74,3 +74,31 @@ class DTree:
         self.lessequal = lessequal
         self.greater = greater
         self.outcome = outcome
+    
+    def tuple_atleast(self):
+        if self.variable == None:
+            return 0
+        maxnum = self.variable + 1
+        if self.lessequal.tuple_atleast() > maxnum:
+            maxnum = self.lessequal.tuple_atleast()
+        if self.greater.tuple_atleast() > maxnum:
+            maxnum = self.greater.tuple_atleast()
+        return maxnum
+
+    def find_outcome(self, tple):
+        if self.variable is None:
+            return self.outcome
+        if tple[self.variable] > self.threshold:
+            return self.greater.find_outcome(tple)
+        if tple[self.variable] <= self.threshold:
+            return self.lessequal.find_outcome(tple)
+        
+    def no_repeats(self):
+        def helper(node, lst):
+            if node.variable is None:
+                return True
+            if node.variable in lst:
+                return False
+            lst.append(node.variable)
+            return helper(node.lessequal, lst) and helper(node.greater, lst)
+        return helper(self, [])
