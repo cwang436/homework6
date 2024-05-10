@@ -15,6 +15,7 @@ def make_change(total):
     helperchange(total, coins, [], result)
     return result
 
+
 def helperchange(remaining, coins, current_combo, result):
     if remaining == 0:
         result.append(list(current_combo))
@@ -27,9 +28,6 @@ def helperchange(remaining, coins, current_combo, result):
         helperchange(remaining - i * coin, coins[1:], 
                      current_combo + [coin] * i, result)
 
-total = 10
-print(make_change(total))
-
 
 def dict_filter(func, dictionary):
     ret = {}
@@ -39,12 +37,6 @@ def dict_filter(func, dictionary):
     return ret
 
 
-example = {"Illinois": "IL", "Pennsylvania": "PA", "Indiana": "IN"}
-def checker(name, abbrev):
-    return abbrev[0] == "I" and name[1] == "l"
-print(dict_filter(checker, example))
-
-
 class KVTree:
     def __init__(self, key, value):
         self.key = key
@@ -52,6 +44,8 @@ class KVTree:
         self.children = []
     def add_child(self, child):
         self.children.append(child)
+
+
 samplekv = KVTree("us", 4.6)
 pa = KVTree("pa", 1.9)
 samplekv.add_child(pa)
@@ -61,9 +55,22 @@ il = KVTree("il", 2.7)
 samplekv.add_child(il)
 il.add_child(KVTree("Chicago", 2.7))
 
+
 def treemap(function, tree):
     tree.key, tree.value = function(tree.key, tree.value)
     for i in tree.children:
         treemap(function, i)
 
+
 treemap(lambda x, y: (x.upper(), y * 1000000), samplekv)
+
+
+class DTree:
+    def __init__(self, variable, threshold, lessequal, greater, outcome):
+        if (variable is None or threshold is None or lessequal is None or greater is None) == (outcome is None):
+            raise ValueError()
+        self.variable = variable
+        self.threshold = threshold
+        self.lessequal = lessequal
+        self.greater = greater
+        self.outcome = outcome
